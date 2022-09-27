@@ -132,9 +132,9 @@ export const RoutePageFactory = {
 };
 
 export const ExternalLinks = {
-  DOCUMENTATION: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science/1',
-  GITHUB: 'https://github.com/red-hat-data-services/data-science-pipelines',
-  GITHUB_ISSUE: 'https://github.com/red-hat-data-services/data-science-pipelines/issues/new/choose',
+  DOCUMENTATION: 'https://www.kubeflow.org/docs/pipelines/sdk/pipelines-with-tekton/',  // TODO: update?
+  GITHUB: 'https://github.com/opendatahub-io/ml-pipelines',
+  GITHUB_ISSUE: 'https://github.com/opendatahub-io/ml-pipelines/issues/new/choose',
 };
 
 export interface DialogProps {

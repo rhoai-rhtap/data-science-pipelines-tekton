@@ -10,22 +10,22 @@ Data Science Pipelines is the Open Data Hub's pipeline solution for data scienti
 1. The cluster needs to be OpenShift 4.9 or higher
 2. OpenShift Pipelines 1.7.2 or higher needs to be installed on the cluster
 3. The Red Hat Openshift Data Science operator needs to be installed
-4. The default installation namespace for Data Science Pipelines is `redhat-ods-applications`. This namespace will need to be created. In case you wish to install in a custom location, create it and update the kfdef as documented below.
+4. The default installation namespace for Data Science Pipelines is `odh-applications`. This namespace will need to be created. In case you wish to install in a custom location, create it and update the kfdef as documented below.
 
 ### Installation Steps
 
 1. Ensure that the prerequisites are met.
-2. Apply the kfdef at [kfctl_openshift_ds-pipelines.yaml](https://github.com/red-hat-data-services/odh-manifests/blob/master/kfdef/kfctl_openshift_ds-pipelines.yaml). You may need to update the `namespace` field under `metadata` in case you want to deploy in a namespace that isn't `redhat-ods-applications`.
+2. Apply the kfdef at [kfctl_openshift_ds-pipelines.yaml](https://github.com/red-hat-data-services/odh-manifests/blob/master/kfdef/kfctl_openshift_ds-pipelines.yaml). You may need to update the `namespace` field under `metadata` in case you want to deploy in a namespace that isn't `odh-applications`.
 3. To find the url for Data Science pipelines, you can run the following command.
     ```bash
     $ oc get route -n <kdef_namespace> ds-pipeline-ui -o jsonpath='{.spec.host}'
     ```
-    The value of `<kfdef_namespace>` should match the namespace field of the kfdef that you applied.
+   The value of `<kfdef_namespace>` should match the namespace field of the kfdef that you applied.
 4. Alternatively, you can access the route via the console. To do so:
 
-    1. Go to `<kfdef_namespace>`
-    2. Click on `Networking` in the sidebar on the left side.
-    3. Click on `Routes`. It will take you to a new page in the console.
+   1. Go to `<kfdef_namespace>`
+   2. Click on `Networking` in the sidebar on the left side.
+   3. Click on `Routes`. It will take you to a new page in the console.
     4. Click the url under the `Location` column for the row item matching `ds-pipeline-ui`
 
 
@@ -41,7 +41,7 @@ This directory contains artifacts for deploying all backend components of Data S
 2. ds-pipeline-ui: This overlay contains deployment artifacts for the Data Science Pipelines UI. Deploying Data Science Pipelines without this overlay will result in only the backend artifacts being created.
 3. object-store-minio: This overlay contains artifacts for deploying Minio as the Object Store to store Pipelines artifacts.
 4. default-configs: This overlay applies default configuration files and credentials (for db and s3 stores)
-5. integration-odhdashboard: This overlay adds configurations necessary to integrate AppTiles, Documentation links, etc, for Data Science Pipelines into RHODS Dashboard
+5. integration-odhdashboard: This overlay adds configurations necessary to integrate AppTiles, Documentation links, etc, for Data Science Pipelines into the Dashboard
 
 ### Prometheus
 
@@ -53,7 +53,7 @@ You can customize the Data Science Pipelines deployment by injecting custom para
 
 * **pipeline_install_configuration**: The ConfigMap name that contains the values to install the Data Science Pipelines environment. This parameter defaults to `pipeline-install-config` and you can find an example in the [repository](./base/configmaps/pipeline-install-config.yaml).
 * **ds_pipelines_configuration**: The ConfigMap name that contains the values to integrate Data Science Pipelines with the underlying components (Database and Object Store). This parameter defaults to `kfp-tekton-config` and you can find an example in the [repository](./base/configmaps/kfp-tekton-config.yaml).
-* **database_secret**: The secret that contains the credentials for the Data Science Pipelines Databse. It defaults to `mysql-secret` if using the `metadata-store-mariadb` overlay 
+* **database_secret**: The secret that contains the credentials for the Data Science Pipelines Database. It defaults to `mysql-secret` if using the `metadata-store-mariadb` overlay 
 * **ds_pipelines_ui_configuration**: The ConfigMap that contains the values to customize UI. It defaults to `ds-pipeline-ui-configmap`.
 
 ## Configuration
