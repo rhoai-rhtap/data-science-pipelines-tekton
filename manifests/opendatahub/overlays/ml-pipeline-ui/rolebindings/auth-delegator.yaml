@@ -8,4 +8,5 @@ roleRef:
   name: system:auth-delegator
 subjects:
   - kind: ServiceAccount
+    namespace: $(namespace)
     name: ml-pipeline-ui

@@ -3,6 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  # Build Configs
+  - ./buildconfigs/vizualization-server.yaml
+
   # CustomResourceDefinitions
   - ./customresourcedefinitions/viewers.yaml
   - ./customresourcedefinitions/scheduledworkflows.yaml
@@ -20,6 +23,7 @@ resources:
   - ./rolebindings/ml-pipeline-viewer-crd-binding.yaml
   - ./rolebindings/ml-pipeline.yaml
   - ./rolebindings/pipeline-runner-binding.yaml
+  - ./rolebindings/ml-pipeline-visualizationserver.yaml
 
   # ServiceAccounts
   - ./serviceaccounts/kubeflow-pipelines-container-builder.yaml
@@ -41,6 +45,9 @@ resources:
   - ./deployments/ml-pipeline-viewer-crd.yaml
   - ./deployments/ml-pipeline-visualizationserver.yaml
   - ./deployments/ml-pipeline.yaml
+
+  # Image Streams
+  - ./imagestreams/visualization-server.yaml
 
   # Services
   - ./services/ml-pipeline-visualizationserver.yaml
@@ -104,9 +111,6 @@ images:
     newTag: 1.1.0
   - name: viewer-crd-controller
     newName: gcr.io/ml-pipeline/viewer-crd-controller
-    newTag: 1.7.0
-  - name: visualization-server
-    newName: gcr.io/ml-pipeline/visualization-server
     newTag: 1.7.0
   - name: api-server
     newName: quay.io/internaldatahub/api-server
