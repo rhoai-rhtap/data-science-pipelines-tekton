@@ -4,7 +4,7 @@ kind: Kustomization
 
 resources:
   # Build Configs
-  - ./buildconfigs/vizualization-server.yaml
+  - ./buildconfigs/visualization-server.yaml
 
   # CustomResourceDefinitions
   - ./customresourcedefinitions/viewers.yaml
@@ -22,7 +22,7 @@ resources:
   - ./rolebindings/ds-pipeline-viewer-crd-binding.yaml
   - ./rolebindings/ds-pipeline.yaml
   - ./rolebindings/pipeline-runner-binding.yaml
-  - ./rolebindings/ml-pipeline-visualizationserver.yaml
+  - ./rolebindings/ds-pipeline-visualizationserver.yaml
 
   # Roles
   - ./roles/ds-pipeline-scheduledworkflow-role.yaml
@@ -105,14 +105,14 @@ configurations:
 
 images:
   - name: persistenceagent
-    newName: quay.io/internaldatahub/persistenceagent
-    newTag: 1.1.0
+    newName: quay.io/modh/odh-ml-pipelines-persistenceagent-container
+    newTag: v1.18.0-8
   - name: scheduledworkflow
-    newName: quay.io/internaldatahub/scheduledworkflow
-    newTag: 1.1.0
+    newName: quay.io/modh/odh-ml-pipelines-scheduledworkflow-container
+    newTag: v1.18.0-8
   - name: viewer-crd-controller
-    newName: gcr.io/ml-pipeline/viewer-crd-controller
-    newTag: 1.7.0
+    newName: quay.io/modh/odh-ml-pipelines-viewercontroller-container
+    newTag: v1.18.0-8
   - name: api-server
-    newName: quay.io/internaldatahub/api-server
-    newTag: 1.1.0
+    newName: quay.io/modh/odh-ml-pipelines-api-server-container
+    newTag: v1.18.0-8
