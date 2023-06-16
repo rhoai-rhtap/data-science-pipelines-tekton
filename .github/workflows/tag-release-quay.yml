@@ -47,7 +47,7 @@ jobs:
         run: echo "tag=$(git describe --tags --abbrev=0)" >> ${GITHUB_OUTPUT}
       - name: Get latest tag hash
         id: hash
-        run: echo "hash=$(git rev-parse --short ${{ steps.tag.outputs.tag }} )" >> ${GITHUB_OUTPUT}
+        run: echo "hash=$(git rev-parse --short=7 ${{ steps.tag.outputs.tag }} )" >> ${GITHUB_OUTPUT}
       - name: Create new tag
         shell: bash
         env:
