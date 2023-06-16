@@ -1,6 +1,6 @@
 name: Image push per Github Tag
 
-# This GitHub action activates whenever a new tag is created on the repo under opendatahub-io
+# This GitHub action activates whenever a new tag is created on the repo under opendatahub-io org
 # and creates a copy of the image of the associated commit hash with the
 # appropriate tag name.
 
