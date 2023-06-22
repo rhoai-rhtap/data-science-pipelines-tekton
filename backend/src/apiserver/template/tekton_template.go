@@ -258,8 +258,6 @@ func (t *Tekton) injectArchivalStep(workflow util.Workflow, artifactItemsJSON ma
 		artifacts, hasArtifacts := artifactItemsJSON[task.Name]
 		archiveLogs := common.IsArchiveLogs()
 		trackArtifacts := common.IsTrackArtifacts()
-		objectStoreAccessKey := common.GetObjectStoreAccessKey()
-		objectStoreSecretKey := common.GetObjectStoreSecretKey()
 		stripEOF := common.IsStripEOF()
 		injectDefaultScript := common.IsInjectDefaultScript()
 		copyStepTemplate := common.GetCopyStepTemplate()
@@ -342,8 +340,8 @@ func (t *Tekton) injectArchivalStep(workflow util.Workflow, artifactItemsJSON ma
 					t.getObjectFieldSelector("PIPELINERUN", "metadata.labels['tekton.dev/pipelineRun']"),
 					t.getObjectFieldSelector("PODNAME", "metadata.name"),
 					t.getObjectFieldSelector("NAMESPACE", "metadata.namespace"),
-					t.getEnvVar("AWS_ACCESS_KEY_ID", objectStoreAccessKey),
-					t.getEnvVar("AWS_SECRET_ACCESS_KEY", objectStoreSecretKey),
+					t.getSecretKeySelector("AWS_ACCESS_KEY_ID", "mlpipeline-minio-artifact", "accesskey"),
+					t.getSecretKeySelector("AWS_SECRET_ACCESS_KEY", "mlpipeline-minio-artifact", "secretkey"),
 					t.getEnvVar("ARCHIVE_LOGS", strconv.FormatBool(archiveLogs)),
 					t.getEnvVar("TRACK_ARTIFACTS", strconv.FormatBool(trackArtifacts)),
 					t.getEnvVar("STRIP_EOF", strconv.FormatBool(stripEOF)),

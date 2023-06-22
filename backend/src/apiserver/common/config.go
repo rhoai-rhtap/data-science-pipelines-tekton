@@ -48,7 +48,7 @@ const (
 	MoveResultsImage                        string = "MOVERESULTS_IMAGE"
 	Path4InternalResults                    string = "PATH_FOR_INTERNAL_RESULTS"
 	ObjectStoreAccessKey                    string = "OBJECTSTORECONFIG_ACCESSKEY"
-	ObjectStoreSecretKey                    string = "OBJECTSTORECONFIG_SECRETACCESSKEY"
+	ObjectStoreSecretKey                    string = "OBJECTSTORECONFIG_SECRETKEY"
 )
 
 func IsPipelineVersionUpdatedByDefault() bool {
@@ -143,14 +143,6 @@ func GetPodNamespace() string {
 
 func GetArtifactImage() string {
 	return GetStringConfigWithDefault(ArtifactImage, DefaultArtifactImage)
-}
-
-func GetObjectStoreAccessKey() string {
-	return GetStringConfig(ObjectStoreAccessKey)
-}
-
-func GetObjectStoreSecretKey() string {
-	return GetStringConfig(ObjectStoreSecretKey)
 }
 
 func GetMoveResultsImage() string {
