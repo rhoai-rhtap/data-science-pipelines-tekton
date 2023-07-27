@@ -6,10 +6,12 @@ name: Image push per Github Tag
 
 run-name: Creating new tag in quay based on pushed tag in Github.
 on:
-  push:
-    tags:
-      - '*'
   workflow_dispatch:
+    inputs:
+      target_tag:
+        default: 'vx.y.z'
+        description: 'DSP Tag'
+        required: true
 env:
   IMAGE_SERVER: quay.io/opendatahub/ds-pipelines-api-server
   IMAGE_UI: quay.io/opendatahub/ds-pipelines-frontend
@@ -42,16 +44,13 @@ jobs:
           QUAY_ROBOT_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
         run: |
          skopeo login quay.io -u ${QUAY_ROBOT_USERNAME} -p ${QUAY_ROBOT_TOKEN}
-      - name: Get latest tag name
-        id: tag
-        run: echo "tag=$(git tag | tail -n 1)" >> ${GITHUB_OUTPUT}
       - name: Get latest tag hash
         id: hash
-        run: echo "hash=$(git rev-parse --short=7 ${{ steps.tag.outputs.tag }} )" >> ${GITHUB_OUTPUT}
+        run: echo "hash=$(git rev-parse --short=7 ${{ inputs.target_tag }} )" >> ${GITHUB_OUTPUT}
       - name: Create new tag
         shell: bash
         env:
-          TAG: ${{ steps.tag.outputs.tag }}
+          TAG: ${{ inputs.target_tag }}
           HASH: ${{ steps.hash.outputs.hash }}
         run: |
           skopeo copy docker://${IMAGE_SERVER}:main-${{ env.HASH }} docker://${IMAGE_SERVER}:${{ env.TAG }}
