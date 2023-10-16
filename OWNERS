@@ -4,7 +4,6 @@ approvers:
   - DharmitD
   - gmfrasca
   - gregsheremeta
-  - harshad16
   - HumairAK
   - rimolive
 reviewers:
@@ -12,6 +11,7 @@ reviewers:
   - DharmitD
   - gmfrasca
   - gregsheremeta
-  - harshad16
   - HumairAK
   - rimolive
+emeritus_approvers:
+  - harshad16
