@@ -76,6 +76,8 @@ TEKTON_COMPILED_YAML_DIR="${TEMP_DIR}/tekton_compiler_output"
 COMPILER_OUTPUTS_FILE="${TEMP_DIR}/test_kfp_samples_output.txt"
 CONFIG_FILE="${PROJECT_DIR}/sdk/python/tests/config.yaml"
 REPLACE_EXCEPTIONS="FALSE" # "TRUE" | "FALSE"
+CYTHON_PACKAGE="cython<3.0.0"
+PYYAML_PACKAGE="pyyaml==5.4.1"
 
 # print KFP SDK and GIT versions (might be different)
 #echo "KFP_GIT_VERSION=${KFP_GIT_VERSION}"
@@ -121,6 +123,13 @@ if [ ! -d "${VENV_DIR}" ]; then
   pip install -q --upgrade pip
 fi
 source "${VENV_DIR}/bin/activate"
+
+# Check if the necessary packages are installed
+if ! (pip show "$CYTHON_PACKAGE" | grep Version) || ! (pip show "$PYYAML_PACKAGE" | grep Version); then
+  echo "Installing necessary packages..."
+  # Install the packages
+  pip install "$CYTHON_PACKAGE" && pip install --no-build-isolation "$PYYAML_PACKAGE"
+fi
 
 # install KFP with the desired KFP SDK version (unless already installed)
 if ! (pip show "kfp" | grep Version | grep -q "${KFP_SDK_VERSION}"); then
