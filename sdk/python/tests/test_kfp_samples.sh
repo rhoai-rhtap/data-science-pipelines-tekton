@@ -124,12 +124,11 @@ if [ ! -d "${VENV_DIR}" ]; then
 fi
 source "${VENV_DIR}/bin/activate"
 
-# Check if the necessary packages are installed
-if ! (pip show "$CYTHON_PACKAGE" | grep Version) || ! (pip show "$PYYAML_PACKAGE" | grep Version); then
-  echo "Installing necessary packages..."
-  # Install the packages
-  pip install "$CYTHON_PACKAGE" && pip install --no-build-isolation "$PYYAML_PACKAGE"
-fi
+# create a constraint file that limits the Cython version to one that should work
+echo "$CYTHON_PACKAGE" > /tmp/constraint.txt
+
+# install PyYAML itself
+PIP_CONSTRAINT=/tmp/constraint.txt pip install "${PYYAML_PACKAGE}"
 
 # install KFP with the desired KFP SDK version (unless already installed)
 if ! (pip show "kfp" | grep Version | grep -q "${KFP_SDK_VERSION}"); then
