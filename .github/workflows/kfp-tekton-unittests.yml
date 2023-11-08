@@ -58,7 +58,7 @@ jobs:
     - name: Install dependencies
       run: python -m pip install -e sdk/python
     - name: "Progress report on compiling KFP DSL test scripts"
-      run: VENV=$VIRTUAL_ENV make report
+      run: VENV=$VIRTUAL_ENV make report PRINT_ERRORS="TRUE"
   python-lint:
     runs-on: ubuntu-latest
     steps:

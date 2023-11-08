@@ -148,6 +148,10 @@ if ! (pip show "pytest" | grep -q Version); then
   pip install -q pytest
 fi
 
+# WORKAROUND - See https://stackoverflow.com/a/76177575
+pip uninstall -y urllib3 requests-toolbelt
+pip install urllib3==1.26.15 requests-toolbelt==0.10.1
+
 # install 3rd party dependencies required for certain pipeline samples
 if [[ "${ALL_SAMPLES}" == "TRUE" ]]; then
   echo "Installing 3rd-party dependencies ..."
