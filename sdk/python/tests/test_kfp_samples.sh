@@ -76,6 +76,8 @@ TEKTON_COMPILED_YAML_DIR="${TEMP_DIR}/tekton_compiler_output"
 COMPILER_OUTPUTS_FILE="${TEMP_DIR}/test_kfp_samples_output.txt"
 CONFIG_FILE="${PROJECT_DIR}/sdk/python/tests/config.yaml"
 REPLACE_EXCEPTIONS="FALSE" # "TRUE" | "FALSE"
+CYTHON_PACKAGE="cython<3.0.0"
+PYYAML_PACKAGE="pyyaml==5.4.1"
 
 # print KFP SDK and GIT versions (might be different)
 #echo "KFP_GIT_VERSION=${KFP_GIT_VERSION}"
@@ -122,6 +124,12 @@ if [ ! -d "${VENV_DIR}" ]; then
 fi
 source "${VENV_DIR}/bin/activate"
 
+# create a constraint file that limits the Cython version to one that should work
+echo "$CYTHON_PACKAGE" > /tmp/constraint.txt
+
+# install PyYAML itself
+PIP_CONSTRAINT=/tmp/constraint.txt pip install "${PYYAML_PACKAGE}"
+
 # install KFP with the desired KFP SDK version (unless already installed)
 if ! (pip show "kfp" | grep Version | grep -q "${KFP_SDK_VERSION}"); then
   echo "Installing KFP SDK ${KFP_SDK_VERSION} ..."
@@ -139,6 +147,10 @@ if ! (pip show "pytest" | grep -q Version); then
   echo "Installing pytest ..."
   pip install -q pytest
 fi
+
+# WORKAROUND - See https://stackoverflow.com/a/76177575
+pip uninstall -y urllib3 requests-toolbelt
+pip install urllib3==1.26.15 requests-toolbelt==0.10.1
 
 # install 3rd party dependencies required for certain pipeline samples
 if [[ "${ALL_SAMPLES}" == "TRUE" ]]; then
