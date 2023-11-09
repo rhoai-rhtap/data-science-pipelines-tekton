@@ -262,6 +262,9 @@ func (t *Tekton) injectArchivalStep(workflow util.Workflow, artifactItemsJSON ma
 		artifacts, hasArtifacts := artifactItemsJSON[task.Name]
 		archiveLogs := common.IsArchiveLogs()
 		trackArtifacts := common.IsTrackArtifacts()
+		objectStoreCredentialsSecretName := common.GetObjectStoreCredentialsSecretName()
+		objectStoreCredentialsSecretAccessKeyKey := common.GetObjectStoreCredentialsAccessKeyKey()
+		objectStoreCredentialsSecretSecretKeyKey := common.GetObjectStoreCredentialsSecretKeyKey()
 		stripEOF := common.IsStripEOF()
 		injectDefaultScript := common.IsInjectDefaultScript()
 		copyStepTemplate := common.GetCopyStepTemplate()
@@ -344,8 +347,8 @@ func (t *Tekton) injectArchivalStep(workflow util.Workflow, artifactItemsJSON ma
 					t.getObjectFieldSelector("PIPELINERUN", "metadata.labels['tekton.dev/pipelineRun']"),
 					t.getObjectFieldSelector("PODNAME", "metadata.name"),
 					t.getObjectFieldSelector("NAMESPACE", "metadata.namespace"),
-					t.getSecretKeySelector("AWS_ACCESS_KEY_ID", "mlpipeline-minio-artifact", "accesskey"),
-					t.getSecretKeySelector("AWS_SECRET_ACCESS_KEY", "mlpipeline-minio-artifact", "secretkey"),
+					t.getSecretKeySelector("AWS_ACCESS_KEY_ID", objectStoreCredentialsSecretName, objectStoreCredentialsSecretAccessKeyKey),
+					t.getSecretKeySelector("AWS_SECRET_ACCESS_KEY", objectStoreCredentialsSecretName, objectStoreCredentialsSecretSecretKeyKey),
 					t.getEnvVar("ARCHIVE_LOGS", strconv.FormatBool(archiveLogs)),
 					t.getEnvVar("TRACK_ARTIFACTS", strconv.FormatBool(trackArtifacts)),
 					t.getEnvVar("STRIP_EOF", strconv.FormatBool(stripEOF)),
@@ -353,6 +356,22 @@ func (t *Tekton) injectArchivalStep(workflow util.Workflow, artifactItemsJSON ma
 				step.Command = []string{"sh", "-c"}
 				step.Args = []string{artifactScript}
 
+				caBundleCfgMapName := common.GetCABundleConfigMapName()
+				caBundleCfgMapKey := common.GetCABundleConfigMapKey()
+				if caBundleCfgMapName != "" && caBundleCfgMapKey != "" {
+					if step.VolumeMounts == nil {
+						step.VolumeMounts = []corev1.VolumeMount{}
+					}
+					volName := "custom-ca-bundle"
+					bundleVolume := t.getConfigMapVolumeSource(volName, caBundleCfgMapName)
+					task.TaskSpec.Volumes = append(task.TaskSpec.Volumes, bundleVolume)
+					bundleVolumeMount := corev1.VolumeMount{
+						Name:      volName,
+						MountPath: fmt.Sprintf("%s/%s", common.GetCABundleMountPath(), caBundleCfgMapKey),
+						SubPath:   caBundleCfgMapKey,
+					}
+					step.VolumeMounts = append(step.VolumeMounts, bundleVolumeMount)
+				}
 				task.TaskSpec.Steps = append(task.TaskSpec.Steps, step)
 			}
 		}
@@ -436,6 +455,19 @@ func (t *Tekton) getHostPathVolumeSource(name string, path string) corev1.Volume
 		VolumeSource: corev1.VolumeSource{
 			HostPath: &corev1.HostPathVolumeSource{
 				Path: path,
+			},
+		},
+	}
+}
+
+func (t *Tekton) getConfigMapVolumeSource(name string, configMapName string) corev1.Volume {
+	return corev1.Volume{
+		Name: name,
+		VolumeSource: corev1.VolumeSource{
+			ConfigMap: &corev1.ConfigMapVolumeSource{
+				LocalObjectReference: corev1.LocalObjectReference{
+					Name: configMapName,
+				},
 			},
 		},
 	}
