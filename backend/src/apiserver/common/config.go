@@ -42,13 +42,19 @@ const (
 	ArtifactScript                          string = "ARTIFACT_SCRIPT"
 	ArtifactImage                           string = "ARTIFACT_IMAGE"
 	ArtifactCopyStepTemplate                string = "ARTIFACT_COPY_STEP_TEMPLATE"
+	ArtifactCopyStepCABundleConfigMapName   string = "ARTIFACT_COPY_STEP_CABUNDLE_CONFIGMAP_NAME"
+	ArtifactCopyStepCABundleConfigMapKey    string = "ARTIFACT_COPY_STEP_CABUNDLE_CONFIGMAP_KEY"
+	ArtifactCopyStepCABundleMountPath       string = "ARTIFACT_COPY_STEP_CABUNDLE_MOUNTPATH"
 	InjectDefaultScript                     string = "INJECT_DEFAULT_SCRIPT"
 	ApplyTektonCustomResource               string = "APPLY_TEKTON_CUSTOM_RESOURCE"
 	TerminateStatus                         string = "TERMINATE_STATUS"
 	MoveResultsImage                        string = "MOVERESULTS_IMAGE"
 	Path4InternalResults                    string = "PATH_FOR_INTERNAL_RESULTS"
+	ObjectStoreCredentialsSecret            string = "OBJECTSTORECONFIG_CREDENTIALSSECRET"
+	ObjectStoreCredentialsAccessKeyKey      string = "OBJECTSTORECONFIG_CREDENTIALSACCESSKEYKEY"
+	ObjectStoreCredentialsSecretKeyKey      string = "OBJECTSTORECONFIG_CREDENTIALSSECRETKEYKEY"
 	ObjectStoreAccessKey                    string = "OBJECTSTORECONFIG_ACCESSKEY"
-	ObjectStoreSecretKey                    string = "OBJECTSTORECONFIG_SECRETKEY"
+	ObjectStoreSecretKey                    string = "OBJECTSTORECONFIG_SECRETACCESSKEY"
 )
 
 func IsPipelineVersionUpdatedByDefault() bool {
@@ -137,12 +143,44 @@ func IsApplyTektonCustomResource() string {
 	return GetStringConfigWithDefault(ApplyTektonCustomResource, "true")
 }
 
+func GetCABundleConfigMapName() string {
+	return GetStringConfigWithDefault(ArtifactCopyStepCABundleConfigMapName, "")
+}
+
+func GetCABundleConfigMapKey() string {
+	return GetStringConfigWithDefault(ArtifactCopyStepCABundleConfigMapKey, "")
+}
+
+func GetCABundleMountPath() string {
+	return GetStringConfigWithDefault(ArtifactCopyStepCABundleMountPath, "/etc/ssl/certs")
+}
+
 func GetPodNamespace() string {
 	return GetStringConfig(PodNamespace)
 }
 
 func GetArtifactImage() string {
 	return GetStringConfigWithDefault(ArtifactImage, DefaultArtifactImage)
+}
+
+func GetObjectStoreAccessKey() string {
+	return GetStringConfig(ObjectStoreAccessKey)
+}
+
+func GetObjectStoreSecretKey() string {
+	return GetStringConfig(ObjectStoreSecretKey)
+}
+
+func GetObjectStoreCredentialsSecretName() string {
+	return GetStringConfigWithDefault(ObjectStoreCredentialsSecret, DefaultObjectStoreCredentialsSecret)
+}
+
+func GetObjectStoreCredentialsAccessKeyKey() string {
+	return GetStringConfigWithDefault(ObjectStoreCredentialsAccessKeyKey, DefaultObjectStoreCredentialsAccessKeyKey)
+}
+
+func GetObjectStoreCredentialsSecretKeyKey() string {
+	return GetStringConfigWithDefault(ObjectStoreCredentialsSecretKeyKey, DefaultObjectStoreCredentialsSecretKeyKey)
 }
 
 func GetMoveResultsImage() string {
