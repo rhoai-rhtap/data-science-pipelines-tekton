@@ -35,9 +35,9 @@ jobs:
             dockerfile: backend/artifact_manager/Dockerfile
           - image: ds-pipelines-metadata-writer
             dockerfile: backend/metadata_writer/Dockerfile
-          - image: ds-pipelines-metadata-envoy
-            dockerfile: third-party/ml-metadata/Dockerfile
           - image: ds-pipelines-metadata-grpc
+            dockerfile: third-party/ml-metadata/Dockerfile
+          - image: ds-pipelines-metadata-envoy
             dockerfile: third-party/metadata_envoy/Dockerfile
     steps:
       - uses: actions/checkout@v3

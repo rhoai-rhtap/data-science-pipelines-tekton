@@ -23,6 +23,12 @@ on:
         default: 'true'
         description: 'Overwrite images in quay if they already exist for this release.'
         required: true
+      fail_fast:
+        type: string
+        default: 'true'
+        description: 'Stop running entire Workflow if a single build fails'
+        required: true
+
   workflow_dispatch:
     inputs:
       src_branch:
@@ -45,18 +51,12 @@ on:
         default: 'true'
         description: 'Overwrite images in quay if they already exist for this release.'
         required: true
- 
+      fail_fast:
+        type: string
+        default: 'true'
+        description: 'Stop running entire Workflow if a single build fails'
+        required: true
 env:
-  IMAGE_REPO_SERVER: ds-pipelines-api-server
-  IMAGE_REPO_UI: ds-pipelines-frontend
-  IMAGE_REPO_CACHE: ds-pipelines-cacheserver
-  IMAGE_REPO_PA: ds-pipelines-persistenceagent
-  IMAGE_REPO_SWF: ds-pipelines-scheduledworkflow
-  IMAGE_REPO_VC: ds-pipelines-viewercontroller
-  IMAGE_REPO_ARTIFACT: ds-pipelines-artifact-manager
-  IMAGE_REPO_MLMD_WRITER: ds-pipelines-metadata-writer
-  IMAGE_REPO_MLMD_ENVOY: ds-pipelines-metadata-envoy
-  IMAGE_REPO_MLMD_GRPC: ds-pipelines-metadata-grpc
   SOURCE_BRANCH: ${{ inputs.src_branch }}
   QUAY_ORG: ${{ inputs.quay_org }}
   QUAY_ID: ${{ secrets.QUAY_ROBOT_USERNAME }}
@@ -64,142 +64,41 @@ env:
   TARGET_IMAGE_TAG: ${{ inputs.target_tag }}
   OVERWRITE_IMAGES: ${{ inputs.overwrite_imgs }}
 jobs:
-  SERVER-build:
+  build-images-with-tag:
+    continue-on-error: false
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      fail-fast: ${{ inputs.fail_fast == 'true' }}
+      matrix:
+        include:
+          - image: ds-pipelines-api-server
+            dockerfile: backend/Dockerfile
+          - image: ds-pipelines-frontend
+            dockerfile: frontend/Dockerfile
+          - image: ds-pipelines-cacheserver
+            dockerfile: backend/Dockerfile.cacheserver
+          - image: ds-pipelines-persistenceagent
+            dockerfile: backend/Dockerfile.persistenceagent
+          - image: ds-pipelines-scheduledworkflow
+            dockerfile: backend/Dockerfile.scheduledworkflow
+          - image: ds-pipelines-viewercontroller
+            dockerfile: backend/Dockerfile.viewercontroller
+          - image: ds-pipelines-artifact-manager
+            dockerfile: backend/artifact_manager/Dockerfile
+          - image: ds-pipelines-metadata-writer
+            dockerfile: backend/metadata_writer/Dockerfile
+          - image: ds-pipelines-metadata-grpc
+            dockerfile: third-party/ml-metadata/Dockerfile
+          - image: ds-pipelines-metadata-envoy
+            dockerfile: third-party/metadata_envoy/Dockerfile
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build
         name: Build Image
         with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_SERVER }}
-          DOCKERFILE: backend/Dockerfile
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  UI-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_UI }}
-          DOCKERFILE: frontend/Dockerfile
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  CACHE-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_CACHE }}
-          DOCKERFILE: backend/Dockerfile.cacheserver
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  PA-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_PA }}
-          DOCKERFILE: backend/Dockerfile.persistenceagent
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  SWF-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_SWF }}
-          DOCKERFILE: backend/Dockerfile.scheduledworkflow
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  VC-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_VC }}
-          DOCKERFILE: backend/Dockerfile.viewercontroller
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  ARTIFACT-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_ARTIFACT }}
-          DOCKERFILE: backend/artifact_manager/Dockerfile
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  MLMD_WRITER-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_MLMD_WRITER }}
-          DOCKERFILE: backend/metadata_writer/Dockerfile
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  MLMD_GRPC-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_MLMD_GRPC }}
-          DOCKERFILE: third-party/ml-metadata/Dockerfile
-          GH_REPO: ${{ github.repository }}
-          OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
-
-  MLMD_ENVOY-build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-        name: Build Image
-        with:
-          IMAGE_REPO: ${{ env.IMAGE_REPO_MLMD_ENVOY }}
-          DOCKERFILE: third-party/metadata_envoy/Dockerfile
+          IMAGE_REPO: ${{ matrix.image }}
+          DOCKERFILE: ${{ matrix.dockerfile }}
           GH_REPO: ${{ github.repository }}
           OVERWRITE: ${{ env.OVERWRITE_IMAGES }}
