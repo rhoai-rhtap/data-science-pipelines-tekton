@@ -5,7 +5,7 @@ on:
     types:
       - completed
 env:
-  QUAY_ORG: gmfrasca
+  QUAY_ORG: opendatahub
   QUAY_ID: ${{ secrets.QUAY_ROBOT_USERNAME }}
   QUAY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
   GH_USER_EMAIL: 140449482+dsp-developers@users.noreply.github.com

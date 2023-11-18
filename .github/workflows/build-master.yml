@@ -7,7 +7,7 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 env:
-  QUAY_ORG: gmfrasca
+  QUAY_ORG: opendatahub
   QUAY_ID: ${{ secrets.QUAY_ROBOT_USERNAME }}
   QUAY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
   SOURCE_BRANCH: master

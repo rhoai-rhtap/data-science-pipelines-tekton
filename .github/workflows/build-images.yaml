@@ -15,7 +15,7 @@ on:
         required: true
       quay_org:
         type: string
-        default: 'gmfrasca'
+        default: 'opendatahub'
         description: 'Quay Organization'
         required: true
       overwrite_imgs:
@@ -43,7 +43,7 @@ on:
         required: true
       quay_org:
         type: string
-        default: 'gmfrasca'
+        default: 'opendatahub'
         description: 'Quay Organization'
         required: true
       overwrite_imgs:
