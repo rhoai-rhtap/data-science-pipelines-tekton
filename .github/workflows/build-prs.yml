@@ -113,7 +113,7 @@ jobs:
       - name: Echo PR metadata
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN_PROJECT_EDIT }}
         run: |
           echo ${{ needs.fetch-data.outputs.head_sha }}
           echo ${{ needs.fetch-data.outputs.pr_number }}
@@ -122,7 +122,7 @@ jobs:
       - name: Send comment
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN_PROJECT_EDIT }}
           FULLIMG_API_SERVER: quay.io/${{ env.QUAY_ORG }}/ds-pipelines-api-server:${{ env.TARGET_IMAGE_TAG }}
           FULLIMG_FRONTEND: quay.io/${{ env.QUAY_ORG }}/ds-pipelines-frontend:${{ env.TARGET_IMAGE_TAG }}
           FULLIMG_CACHESERVER: quay.io/${{ env.QUAY_ORG }}/ds-pipelines-cacheserver:${{ env.TARGET_IMAGE_TAG }}
