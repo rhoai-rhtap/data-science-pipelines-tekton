@@ -1,6 +1,11 @@
 name: Trigger build images for PRs
 on:
   pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'guides/**'
+      - 'images/**'
+      - '**/README.md'
     types:
       - opened
       - reopened
