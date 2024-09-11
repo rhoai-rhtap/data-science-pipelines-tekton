@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/rhoai-tenant/rhoai-v2-13/odh-ml-pipelines-artifact-manager-v2-13:{{revision}}
+    value: quay.io/rhoai/odh-ml-pipelines-artifact-manager:{{revision}}
   - name: dockerfile
     value: backend/artifact_manager/Dockerfile
   - name: path-context
