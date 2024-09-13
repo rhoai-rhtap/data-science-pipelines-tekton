@@ -12,8 +12,7 @@ ARG SOURCE_CODE
 ## Switch to root as required for some operations
 USER root
 
-RUN dnf upgrade -y && \
-    dnf install -y bash \
+RUN dnf install -y bash \
                    git \
                    openssh \
                    gcc && \
