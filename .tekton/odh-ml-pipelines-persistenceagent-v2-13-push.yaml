@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/rhoai/odh-ml-pipelines-persistenceagent:{{revision}}
+    value: quay.io/rhoai/odh-ml-pipelines-persistenceagent-rhel8:{{revision}}
   - name: dockerfile
     value: backend/Dockerfile.persistenceagent
   - name: path-context
