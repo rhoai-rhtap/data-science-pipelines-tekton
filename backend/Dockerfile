@@ -9,8 +9,8 @@ ARG SOURCE_CODE
 USER root
 
 # Needed musl-dev for github.com/mattn/go-sqlite3
-RUN dnf update -y && \
-    dnf install -y cmake clang openssl
+#RUN dnf update -y && \
+   # dnf install -y cmake clang openssl
 
 COPY ${SOURCE_CODE}/go.mod ./
 COPY ${SOURCE_CODE}/go.sum ./
@@ -33,8 +33,8 @@ RUN chmod +x /bin/apiserver
 USER root
 
 # Adding CA certificate so API server can download pipeline through URL and wget is used for liveness/readiness probe command
-RUN microdnf update -y && \
-    microdnf install -y ca-certificates wget
+#RUN microdnf update -y && \
+ #   microdnf install -y ca-certificates wget
 
 USER 1001
 
