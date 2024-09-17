@@ -12,12 +12,12 @@ ARG SOURCE_CODE
 ## Switch to root as required for some operations
 USER root
 
-RUN dnf install -y bash \
-                   git \
-                   openssh \
-                   gcc && \
+#RUN dnf install -y bash \
+            #       git \
+               #    openssh \
+                #   gcc && \
     #dnf groupinstall -y "Development Tools" && \
-    dnf clean all && rm -rf /var/cache/yum
+   # dnf clean all && rm -rf /var/cache/yum
 
 
 COPY ${SOURCE_CODE}/go.mod ./
