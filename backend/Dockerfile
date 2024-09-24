@@ -9,8 +9,8 @@ ARG SOURCE_CODE
 USER root
 
 # Needed musl-dev for github.com/mattn/go-sqlite3
-#RUN dnf update -y && \
-   # dnf install -y cmake clang openssl
+RUN dnf update -y && \
+    dnf install -y cmake clang openssl
 
 COPY ${SOURCE_CODE}/go.mod ./
 COPY ${SOURCE_CODE}/go.sum ./
