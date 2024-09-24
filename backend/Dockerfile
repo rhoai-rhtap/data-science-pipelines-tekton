@@ -10,7 +10,7 @@ USER root
 
 # Needed musl-dev for github.com/mattn/go-sqlite3
 RUN dnf update -y && \
-    dnf install -y cmake clang openssl
+    dnf install -y cmake clang openssl --skip-broken
 
 COPY ${SOURCE_CODE}/go.mod ./
 COPY ${SOURCE_CODE}/go.sum ./
