@@ -9,6 +9,7 @@ ARG SOURCE_CODE
 USER root
 
 # Needed musl-dev for github.com/mattn/go-sqlite3
+RUN microdnf install --setopt=ubi-8-appstream-rpms.module_hotfixes=1
 RUN dnf update -y && \
     dnf install -y cmake clang openssl
 
