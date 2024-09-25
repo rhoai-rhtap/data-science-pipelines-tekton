@@ -130,6 +130,13 @@ arches:
     name: vim-filesystem
     evr: 2:8.0.1763-19.el8_6.4
     sourcerpm: vim-8.0.1763-19.el8_6.4.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/w/wget-1.19.5-12.el8_10.x86_64.rpm
+    repoid: ubi-8-appstream-rpms
+    size: 751872
+    checksum: sha256:8d609774711cea9728faf684ff7e9b389f0f3c2052aa04bcf3061950a830058b
+    name: wget
+    evr: 1.19.5-12.el8_10
+    sourcerpm: wget-1.19.5-12.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/c/checkpolicy-2.9-1.el8.x86_64.rpm
     repoid: ubi-8-baseos-rpms
     size: 354036
