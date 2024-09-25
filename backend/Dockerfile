@@ -32,7 +32,7 @@ RUN chmod +x /bin/apiserver
 
 USER root
 
-Adding CA certificate so API server can download pipeline through URL and wget is used for liveness/readiness probe command
+#Adding CA certificate so API server can download pipeline through URL and wget is used for liveness/readiness probe command
 RUN microdnf update -y && \
     microdnf install -y ca-certificates wget
 
