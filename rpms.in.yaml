@@ -11,3 +11,4 @@ packages:
   - clang
   - openssl
   - ca-certificates
+  - wget
