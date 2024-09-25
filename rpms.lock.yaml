@@ -116,13 +116,13 @@ arches:
     name: libuv
     evr: 1:1.41.1-2.el8_10
     sourcerpm: libuv-1.41.1-2.el8_10.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/l/llvm-libs-17.0.6-3.module+el8.10.0+22125+1509a634.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/l/llvm-libs-17.0.6-2.module+el8.10.0+21256+978ccea6.x86_64.rpm
     repoid: ubi-8-appstream-rpms
-    size: 30357320
-    checksum: sha256:a208147af11dd246d26e92de3247cf0ffed2b46d41ad2947db6a9a91aa760dcd
+    size: 30357568
+    checksum: sha256:7ce75b58c692e2e7af2008d314e941f7ad34b69919bb315ed98cb4ca003e8adf
     name: llvm-libs
-    evr: 17.0.6-3.module+el8.10.0+22125+1509a634
-    sourcerpm: llvm-17.0.6-3.module+el8.10.0+22125+1509a634.src.rpm
+    evr: 17.0.6-2.module+el8.10.0+21256+978ccea6
+    sourcerpm: llvm-17.0.6-2.module+el8.10.0+21256+978ccea6.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/v/vim-filesystem-8.0.1763-19.el8_6.4.noarch.rpm
     repoid: ubi-8-appstream-rpms
     size: 51660
@@ -158,13 +158,6 @@ arches:
     name: libselinux-utils
     evr: 2.9-8.el8
     sourcerpm: libselinux-2.9-8.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libsemanage-2.9-9.el8_6.x86_64.rpm
-    repoid: ubi-8-baseos-rpms
-    size: 172128
-    checksum: sha256:1f686a73273028ca85b5a6ac858292d7b7d2fcbe379d6912ba12fc0a49ac4cce
-    name: libsemanage
-    evr: 2.9-9.el8_6
-    sourcerpm: libsemanage-2.9-9.el8_6.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/p/policycoreutils-2.9-26.el8_10.x86_64.rpm
     repoid: ubi-8-baseos-rpms
     size: 385980
