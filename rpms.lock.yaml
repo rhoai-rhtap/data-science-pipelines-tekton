@@ -207,6 +207,13 @@ arches:
     name: python3-policycoreutils
     evr: 2.9-26.el8_10
     sourcerpm: policycoreutils-2.9-26.el8_10.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/p/python3-setools-4.3.0-5.el8.x86_64.rpm
+    repoid: ubi-8-baseos-rpms
+    size: 642232
+    checksum: sha256:e862d0fd1b2f24e76f1e7d4032faf58530f3db8931967547c5f42e90d2a97f61
+    name: python3-setools
+    evr: 4.3.0-5.el8
+    sourcerpm: setools-4.3.0-5.el8.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/w/wget-1.19.5-12.el8_10.x86_64.rpm
     repoid: ubi-8-appstream-rpms
     size: 751872
@@ -228,11 +235,4 @@ arches:
     name: libmetalink
     evr: 0.1.3-7.el8
     sourcerpm: libmetalink-0.1.3-7.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/p/python3-setools-4.3.0-5.el8.x86_64.rpm
-    repoid: ubi-8-baseos-rpms
-    size: 642232
-    checksum: sha256:e862d0fd1b2f24e76f1e7d4032faf58530f3db8931967547c5f42e90d2a97f61
-    name: python3-setools
-    evr: 4.3.0-5.el8
-    sourcerpm: setools-4.3.0-5.el8.src.rpm
   source: []
