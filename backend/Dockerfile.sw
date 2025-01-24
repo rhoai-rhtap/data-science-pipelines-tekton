@@ -27,8 +27,8 @@ WORKDIR /bin
 COPY --from=builder /bin/controller /bin/controller
 RUN chmod +x /bin/controller
 
-RUN microdnf makecache && \
-     microdnf install -y tzdata.noarch
+RUN microdnf makecache
+RUN microdnf install -y tzdata.noarch
 
 ENV NAMESPACE ""
 
