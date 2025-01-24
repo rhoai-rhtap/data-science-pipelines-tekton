@@ -34,14 +34,4 @@ ENV NAMESPACE ""
 
 CMD /bin/controller --logtostderr=true --namespace=${NAMESPACE}
 
-LABEL com.redhat.component="odh-ml-pipelines-scheduledworkflow-container" \
-      name="managed-open-data-hub/odh-ml-pipelines-scheduledworkflow-container-rhel8" \
-      git.url="${CI_DATA_SCIENCE_PIPELINES_TEKTON_UPSTREAM_URL}" \
-      git.commit="${CI_DATA_SCIENCE_PIPELINES_TEKTON_UPSTREAM_COMMIT}" \
-      summary="odh-ml-pipelines-scheduledworkflow" \
-      io.openshift.expose-services="" \
-      io.k8s.display-name="odh-ml-pipelines-scheduledworkflow" \
-      maintainer="['managed-open-data-hub@redhat.com']" \
-      description="odh-ml-pipelines-scheduledworkflow" \
-      io.k8s.description="odh-ml-pipelines-scheduledworkflow" \
-      com.redhat.license_terms="https://www.redhat.com/licenses/Red_Hat_Standard_EULA_20191108.pdf"
+
