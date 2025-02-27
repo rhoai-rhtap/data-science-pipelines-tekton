@@ -15,6 +15,7 @@ USER root
 COPY ${SOURCE_CODE}/go.mod ./
 COPY ${SOURCE_CODE}/go.sum ./
 
+RUN go mod download
 
 # Copy the source
 COPY ${SOURCE_CODE}/ ./
