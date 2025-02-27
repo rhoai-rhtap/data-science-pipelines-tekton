@@ -12,13 +12,17 @@ ARG SOURCE_CODE
 ## Switch to root as required for some operations
 USER root
 
-COPY ${SOURCE_CODE}/go.mod ./
-COPY ${SOURCE_CODE}/go.sum ./
-
+COPY go.mod go.mod
+COPY go.sum go.sum
 RUN go mod download
 
+#COPY ${SOURCE_CODE}/go.mod ./
+#COPY ${SOURCE_CODE}/go.sum ./
+
+#RUN go mod download
+
 # Copy the source
-COPY ${SOURCE_CODE}/ ./
+#COPY ${SOURCE_CODE}/ ./
 
 RUN GO111MODULE=on go build -o /bin/controller backend/src/crd/controller/scheduledworkflow/*.go
 
